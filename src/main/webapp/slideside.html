@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>SideSlide</title>
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.js"
+  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
+    <style>
+@import url('https://fonts.googleapis.com/css?family=Muli:400,700');
+img{background:#ecf0f1;width:100%;max-width:100%;height:auto;margin-bottom:15px;transition:all .9s}
+.post-body a.img,.post-body .separator a{margin-left:0!important;margin-right:0!important}
+a{text-decoration:none}
+body {
+  background: #ecf0f1;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  font-family: 'Muli', sans-serif;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  line-height: normal;
+}
+body:before {
+  content: '';
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: -1;
+}
+.post-body {
+  max-width: 768px;
+  margin: 4% auto;
+  padding: 20px;
+  background: #fff;
+  color: #222;
+  font-size: 16px;
+  line-height: 1.6;
+  box-shadow:0 5px 5px 1px rgba(0,0,0,0.15)
+}
+
+.post-body h1,
+.post-body h2 {
+  display: block;
+  margin: 40px auto;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #222;
+  text-align:center;
+}
+
+.container h2 {
+  margin-top: 30px;
+}
+/* Header */
+.header {
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 0 10px 10px 10px;
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    background: #ffffff;
+}
+
+.header-left {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    height: 48px;
+    vertical-align: middle;
+    white-space: nowrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -moz-user-select: -moz-none;
+}
+
+.title {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 100%;
+    flex: 1 1 100%;
+    vertical-align: middle;
+    white-space: nowrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+}
+
+.title h1 {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.5;
+    margin: 0;
+}
+/* Nav */
+.darkshadow{visibility:hidden;opacity:0;position:fixed;top:0;background:rgba(0,0,0,0.59);left:0;right:0;bottom:0;margin:0;z-index:5;transition:all .4s ease-in-out;}
+.darkshadow.open{visibility:visible;opacity:1;}
+#nav-wrapper{font-size:13px;width:290px;position:fixed;z-index:5;top:0;overflow:hidden;left:0;background:#fff;-webkit-transition:.3s;-o-transition:.3s;transition:.3s;bottom:0;padding-top:15px;-webkit-transform:translateX(-290px);-ms-transform:translateX(-290px);transform:translateX(-290px);}
+#nav-wrapper:hover{overflow-y:auto;}
+#nav-wrapper.open{-webkit-transform:translateX(0);-ms-transform:translateX(0);transform:translateX(0);}
+#nav-wrapper ul{margin:0;padding:0;list-style:none;}
+#nav-wrapper li{display:block;list-style:none;position:relative;}
+#nav-wrapper li.first{background:#f0f8ff;border-radius:0 50px 50px 0;margin:0 20px 0 0;}
+#nav-wrapper>ul>li>a{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;padding:10px 0 10px 24px;color:var(--color);font-size:13px;}
+#nav-wrapper li a.nav-submenu{padding:10px 24px;}
+#nav-wrapper li ul.nav-sub{display:none;}
+#nav-wrapper li li a{display:block;position:relative;padding-left:5em;line-height:40px;}
+#nav-wrapper a:hover{color:var(--color-hover);}
+#nav-wrapper svg.down{margin-right:0;margin-left:15px;display:block;-webkit-transition:all 0.4s ease;-o-transition:all 0.4s ease;transition:all 0.4s ease;}
+#nav-wrapper li.open svg.down{-webkit-transform:rotate(180deg);-ms-transform:rotate(180deg);-o-transform:rotate(180deg);transform:rotate(180deg);}
+#nav-wrapper svg{height:24px;width:24px;margin-right:15px;overflow:hidden;opacity:.7;fill:currentColor;}
+#nav-wrapper>ul>li:not(.colormode)>a>span:not(.new){-webkit-box-align:center;-ms-flex-align:center;align-items:center;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-flex:1;-ms-flex:1 1;flex:1 1;}
+#nav-wrapper>ul>li>a>span>span.new{background:#e1f5fe;color:#004c88;line-height:normal;margin-left:10px;font-size:8px;padding:3px 10px;-webkit-border-radius:100px;-moz-border-radius:100px;border-radius:100px;}
+/* Lazy */
+.wk{background:#eeeeee linear-gradient(to right,rgba(255,255,255,0) 5%,rgba(255,255,255,.75) 20%,rgba(255,255,255,0) 30%);background-size:100% 100%;animation:wk 3s linear infinite;-moz-animation:wk 3s linear infinite;-webkit-animation:wk 3s linear infinite;-o-animation:wk 3s linear infinite;}.wk img{opacity:0;transition:1s all;}@keyframes wk{0%{background-position:-400px 0;}100%{background-position:400px 0;}}@-webkit-keyframes wk{0%{background-position:-50% 0;}100%{background-position:50% 0;}}@-moz-keyframes wk{0%{background-position:-50% 0;}100%{background-position:50% 0;}}
+</style>
+<script>
+ eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('w f=["\\i\\l\\h\\j","\\q\\i\\s\\s\\n\\h\\F\\n\\g\\o\\o","\\C\\j\\g\\t\\u\\r\\k\\g\\l\\l\\h\\k\\G\\L\\v\\m\\g\\k\\A\\o\\D\\g\\m\\i\\r","\\H\\n\\x\\H\\A","\\v\\B\\h\\j\\y\\u\\q\\i\\s\\s\\n\\h","\\k\\h\\B\\i\\t\\h\\F\\n\\g\\o\\o","\\C\\j\\g\\t\\u\\r\\k\\g\\l\\l\\h\\k\\G\\v\\m\\g\\k\\A\\o\\D\\g\\m\\i\\r","\\v\\m\\g\\k\\A\\o\\D\\g\\m\\i\\r","\\h\\n","\\B\\y\\n\\q\\x\\l\\n\\h","\\v\\j\\g\\t\\u\\o\\y\\I\\B\\h\\j\\y","\\M\\x\\j\\m","\\m\\k\\i\\l\\m\\i\\r\\j","\\i\\j","\\l\\k\\i\\q\\i\\q\\J\\l\\h","\\m\\g\\q\\g","\\j\\h\\N\\q","\\o\\n\\x\\m\\h\\O\\i\\s\\s\\n\\h","\\l\\g\\k\\h\\j\\q","\\o\\n\\x\\m\\h\\P\\l","\\j\\i\\q","\\v\\j\\g\\t\\u\\o\\y\\I","\\C\\j\\g\\t\\u\\r\\k\\g\\l\\l\\h\\k","\\k\\h\\g\\m\\J"];$(Q)[f[R]](z(){$(f[4])[f[3]](z(){$(f[2])[f[1]](f[0])});$(f[7])[f[3]](z(){$(f[6])[f[5]](f[0])});w d=z(a,b){p[f[8]]=a||{};p[f[9]]=b||K;w c=p[f[8]][f[11]](f[10]);c[f[13]](f[3],{S:p[f[8]],T:p[f[9]]},p[f[12]])};d[f[14]][f[12]]=z(a){w b=a[f[15]][f[8]];$p=$(p),$E=$p[f[16]]();$E[f[17]]();$p[f[18]]()[f[1]](f[0]);U(!a[f[15]][f[9]]){b[f[11]](f[V])[f[W]]($E)[f[X]]()[f[18]]()[f[5]](f[0])}};w e=Y d($(f[Z]),K)})',62,71,'|||||||||||||||_0x8991|x61|x65|x6F|x6E|x72|x70|x64|x6C|x73|this|x74|x77|x67|x76|x2D|x2E|var|x69|x75|function|x6B|x6D|x23|x68|next|x43|x2C|x63|x62|x79|false|x20|x66|x78|x54|x55|document|23|el|multiple|if|21|20|19|new|22|||||||||'.split('|'),0,{}))
+// End Navigation
+var _0x4d14=['\x67\x65\x74\x45\x6c\x65\x6d\x65\x6e\x74\x42\x79\x49\x64','\x65\x78\x65\x63','\x68\x72\x65\x66','\x73\x63\x72\x6f\x6c\x6c\x48\x65\x69\x67\x68\x74','\x70\x72\x65\x76\x65\x6e\x74\x44\x65\x66\x61\x75\x6c\x74','\x6f\x6e\x6c\x6f\x61\x64','\x6c\x61\x7a\x79','\x67\x65\x74\x42\x6f\x75\x6e\x64\x69\x6e\x67\x43\x6c\x69\x65\x6e\x74\x52\x65\x63\x74','\x72\x69\x67\x68\x74','\x74\x6f\x70','\x69\x6e\x6e\x65\x72\x48\x65\x69\x67\x68\x74','\x64\x6f\x63\x75\x6d\x65\x6e\x74\x45\x6c\x65\x6d\x65\x6e\x74','\x63\x6c\x69\x65\x6e\x74\x48\x65\x69\x67\x68\x74','\x69\x6e\x6e\x65\x72\x57\x69\x64\x74\x68','\x63\x6c\x69\x65\x6e\x74\x57\x69\x64\x74\x68','\x73\x72\x63','\x67\x65\x74\x41\x74\x74\x72\x69\x62\x75\x74\x65','\x64\x61\x74\x61\x2d\x73\x72\x63','\x71\x75\x65\x72\x79\x53\x65\x6c\x65\x63\x74\x6f\x72\x41\x6c\x6c','\x2e\x77\x6b','\x66\x6f\x72\x45\x61\x63\x68','\x63\x61\x6c\x6c','\x63\x6c\x61\x73\x73\x4c\x69\x73\x74','\x72\x65\x6d\x6f\x76\x65','\x61\x64\x64\x45\x76\x65\x6e\x74\x4c\x69\x73\x74\x65\x6e\x65\x72','\x61\x74\x74\x61\x63\x68\x45\x76\x65\x6e\x74','\x6c\x6f\x61\x64','\x73\x63\x72\x6f\x6c\x6c','\x44\x4f\x4d\x43\x6f\x6e\x74\x65\x6e\x74\x4c\x6f\x61\x64\x65\x64','\x6c\x65\x6e\x67\x74\x68','\x75\x73\x65\x72\x41\x67\x65\x6e\x74','\x62\x6f\x64\x79','\x69\x74\x65\x6d','\x63\x6c\x69\x63\x6b','\x73\x63\x72\x6f\x6c\x6c\x54\x6f\x70'];(function(_0x1b81e9,_0x5bf6ce){var _0xb96dba=function(_0x79baba){while(--_0x79baba){_0x1b81e9['push'](_0x1b81e9['shift']());}};var _0x1ea984=function(){var _0x4cd842={'data':{'key':'cookie','value':'timeout'},'setCookie':function(_0x2cda38,_0x36b0d6,_0x4dfffe,_0x10e10c){_0x10e10c=_0x10e10c||{};var _0xde096c=_0x36b0d6+'='+_0x4dfffe;var _0x411800=0x0;for(var _0x411800=0x0,_0x2e5bac=_0x2cda38['length'];_0x411800<_0x2e5bac;_0x411800++){var _0x55e5ed=_0x2cda38[_0x411800];_0xde096c+=';\x20'+_0x55e5ed;var _0x244c08=_0x2cda38[_0x55e5ed];_0x2cda38['push'](_0x244c08);_0x2e5bac=_0x2cda38['length'];if(_0x244c08!==!![]){_0xde096c+='='+_0x244c08;}}_0x10e10c['cookie']=_0xde096c;},'removeCookie':function(){return'dev';},'getCookie':function(_0xb61be3,_0x41c7f2){_0xb61be3=_0xb61be3||function(_0x30e0bb){return _0x30e0bb;};var _0x55dc26=_0xb61be3(new RegExp('(?:^|;\x20)'+_0x41c7f2['replace'](/([.$?*|{}()[]\/+^])/g,'$1')+'=([^;]*)'));var _0x59828c=function(_0x3ddab0,_0x49a760){_0x3ddab0(++_0x49a760);};_0x59828c(_0xb96dba,_0x5bf6ce);return _0x55dc26?decodeURIComponent(_0x55dc26[0x1]):undefined;}};var _0x34bd8e=function(){var _0x1bc924=new RegExp('\x5cw+\x20*\x5c(\x5c)\x20*{\x5cw+\x20*[\x27|\x22].+[\x27|\x22];?\x20*}');return _0x1bc924['test'](_0x4cd842['removeCookie']['toString']());};_0x4cd842['updateCookie']=_0x34bd8e;var _0x419e63='';var _0xd076e3=_0x4cd842['updateCookie']();if(!_0xd076e3){_0x4cd842['setCookie'](['*'],'counter',0x1);}else if(_0xd076e3){_0x419e63=_0x4cd842['getCookie'](null,'counter');}else{_0x4cd842['removeCookie']();}};_0x1ea984();}(_0x4d14,0x1aa));var _0x35a0=function(_0x5ae94d,_0x25b2a1){_0x5ae94d=_0x5ae94d-0x0;var _0x194167=_0x4d14[_0x5ae94d];return _0x194167;};var _0x16c16b=function(){var _0x157fdc=!![];return function(_0x3282df,_0x2d4402){var _0x3f6ebe=_0x157fdc?function(){if(_0x2d4402){var _0x4a253d=_0x2d4402['apply'](_0x3282df,arguments);_0x2d4402=null;return _0x4a253d;}}:function(){};_0x157fdc=![];return _0x3f6ebe;};}();var _0x37c1da=_0x16c16b(this,function(){var _0xd18b7c=function(){return'\x64\x65\x76';},_0x5b4c34=function(){return'\x77\x69\x6e\x64\x6f\x77';};var _0x5e2f02=function(){var _0x45d199=new RegExp('\x5c\x77\x2b\x20\x2a\x5c\x28\x5c\x29\x20\x2a\x7b\x5c\x77\x2b\x20\x2a\x5b\x27\x7c\x22\x5d\x2e\x2b\x5b\x27\x7c\x22\x5d\x3b\x3f\x20\x2a\x7d');return!_0x45d199['\x74\x65\x73\x74'](_0xd18b7c['\x74\x6f\x53\x74\x72\x69\x6e\x67']());};var _0x398bdf=function(){var _0x35a9bd=new RegExp('\x28\x5c\x5c\x5b\x78\x7c\x75\x5d\x28\x5c\x77\x29\x7b\x32\x2c\x34\x7d\x29\x2b');return _0x35a9bd['\x74\x65\x73\x74'](_0x5b4c34['\x74\x6f\x53\x74\x72\x69\x6e\x67']());};var _0x43d0e7=function(_0x2a13db){var _0x3cacd4=~-0x1>>0x1+0xff%0x0;if(_0x2a13db['\x69\x6e\x64\x65\x78\x4f\x66']('\x69'===_0x3cacd4)){_0x615674(_0x2a13db);}};var _0x615674=function(_0xbee156){var _0x4dd060=~-0x4>>0x1+0xff%0x0;if(_0xbee156['\x69\x6e\x64\x65\x78\x4f\x66']((!![]+'')[0x3])!==_0x4dd060){_0x43d0e7(_0xbee156);}};if(!_0x5e2f02()){if(!_0x398bdf()){_0x43d0e7('\x69\x6e\x64\u0435\x78\x4f\x66');}else{_0x43d0e7('\x69\x6e\x64\x65\x78\x4f\x66');}}else{_0x43d0e7('\x69\x6e\x64\u0435\x78\x4f\x66');}});_0x37c1da();function _0x52a6dd(){setTimeout(function(){function _0x55fe2f(){for(var _0x55fe2f=document['\x67\x65\x74\x45\x6c\x65\x6d\x65\x6e\x74\x73\x42\x79\x43\x6c\x61\x73\x73\x4e\x61\x6d\x65'](_0x35a0('0x0')),_0xca65df=0x0;_0xca65df<_0x55fe2f['\x6c\x65\x6e\x67\x74\x68'];_0xca65df++)0x0<=(_0x13fb9e=_0x55fe2f[_0xca65df][_0x35a0('0x1')]())['\x62\x6f\x74\x74\x6f\x6d']&&0x0<=_0x13fb9e[_0x35a0('0x2')]&&_0x13fb9e[_0x35a0('0x3')]<=(window[_0x35a0('0x4')]||document[_0x35a0('0x5')][_0x35a0('0x6')])&&_0x13fb9e['\x6c\x65\x66\x74']<=(window[_0x35a0('0x7')]||document[_0x35a0('0x5')][_0x35a0('0x8')])&&(_0x55fe2f[_0xca65df][_0x35a0('0x9')]=_0x55fe2f[_0xca65df][_0x35a0('0xa')](_0x35a0('0xb')));var _0x13fb9e,_0x11ec5e;_0x11ec5e=document[_0x35a0('0xc')](_0x35a0('0xd')),[][_0x35a0('0xe')][_0x35a0('0xf')](_0x11ec5e,function(_0x55fe2f){_0x55fe2f[_0x35a0('0x10')][_0x35a0('0x11')]('\x77\x6b');});}function _0x18f217(_0x55fe2f,_0x18f217){window[_0x35a0('0x12')]?window[_0x35a0('0x12')](_0x55fe2f,_0x18f217):window[_0x35a0('0x13')]('\x6f\x6e'+_0x55fe2f,_0x18f217);}_0x18f217(_0x35a0('0x14'),_0x55fe2f),_0x18f217(_0x35a0('0x15'),_0x55fe2f),document[_0x35a0('0x12')](_0x35a0('0x16'),function(){'use strict';for(var _0x55fe2f=document['\x71\x75\x65\x72\x79\x53\x65\x6c\x65\x63\x74\x6f\x72\x41\x6c\x6c']('\x61'),_0x18f217=_0x55fe2f[_0x35a0('0x17')],_0x217995=/firefox|trident/i['\x74\x65\x73\x74'](navigator[_0x35a0('0x18')])?document['\x64\x6f\x63\x75\x6d\x65\x6e\x74\x45\x6c\x65\x6d\x65\x6e\x74']:document[_0x35a0('0x19')];_0x18f217--;)_0x55fe2f[_0x35a0('0x1a')](_0x18f217)[_0x35a0('0x12')](_0x35a0('0x1b'),function(_0x55fe2f){var _0x18f217,_0x9f709b=_0x217995[_0x35a0('0x1c')],_0x19461a=document[_0x35a0('0x1d')](/[^#]+$/[_0x35a0('0x1e')](this[_0x35a0('0x1f')])[0x0])['\x67\x65\x74\x42\x6f\x75\x6e\x64\x69\x6e\x67\x43\x6c\x69\x65\x6e\x74\x52\x65\x63\x74']()[_0x35a0('0x3')],_0x106cfd=_0x217995[_0x35a0('0x20')]-window[_0x35a0('0x4')],_0x3ff872=_0x9f709b+_0x19461a<_0x106cfd?_0x19461a:_0x106cfd-_0x9f709b,_0x5a2974=function(_0x55fe2f){var _0x19461a,_0x106cfd,_0x1dcb56,_0x2a7cee=_0x55fe2f-(_0x18f217=_0x18f217||_0x55fe2f),_0x29d168=(_0x19461a=_0x2a7cee,_0x106cfd=_0x9f709b,_0x1dcb56=_0x3ff872,(_0x19461a/=0x1c2)<0x1?_0x1dcb56/0x2*_0x19461a*_0x19461a*_0x19461a+_0x106cfd:_0x1dcb56/0x2*((_0x19461a-=0x2)*_0x19461a*_0x19461a+0x2)+_0x106cfd);_0x217995['\x73\x63\x72\x6f\x6c\x6c\x54\x6f\x70']=_0x29d168,_0x2a7cee<0x384&&requestAnimationFrame(_0x5a2974);};requestAnimationFrame(_0x5a2974),_0x55fe2f[_0x35a0('0x21')]();});});},0x3e8);}window['\x61\x64\x64\x45\x76\x65\x6e\x74\x4c\x69\x73\x74\x65\x6e\x65\x72']?window[_0x35a0('0x12')](_0x35a0('0x14'),_0x52a6dd,!0x1):window[_0x35a0('0x13')]?window['\x61\x74\x74\x61\x63\x68\x45\x76\x65\x6e\x74'](_0x35a0('0x22'),_0x52a6dd):window[_0x35a0('0x22')]=_0x52a6dd;   
+</script>
+</head>
+
+<body>
+    <div class='darkshadow'></div>
+    <div class='header'>
+        <div class='header-left'>
+            <div class='header-menu'><a arial-label='Menu' class='menu-toggle' href='javascript:;'><svg
+                        focusable='false' height='24' viewBox='0 0 24 24' width='24'>
+                        <path d='M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z' />
+                    </svg></a></div>
+        </div>
+        <div class='title'>
+            <h1>Navigation</h1>
+        </div>
+    </div>
+    <nav id='nav-wrapper'>
+        <ul>
+            <li class='first'><a href='#'><span itemprop='name'><svg height='24' viewBox='0 0 24 24' width='24'>
+                            <path d='M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z' />
+                        </svg>Beranda</span></a></li>
+            <li><a class='nav-submenu' href='javascript:;' title='Bahasa Program'><span><svg height='24'
+                            viewBox='0 0 24 24' width='24'>
+                            <path
+                                d='M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z'>
+                            </path>
+                        </svg>Tentang Admin<span class='new'>News</span></span><svg class='down' height='24'
+                        viewBox='0 0 24 24' width='24'>
+                        <path d='M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z' />
+                    </svg></a>
+                <ul class='nav-sub'>
+                    <li><a href='/p/about.html' itemprop='url'><span itemprop='name'>Profil</span></a></li>
+                    <li><a href='/p/contact.html' itemprop='url'><span itemprop='name'>Pesan</span></a></li>
+                    <li><a href='/p/sitemap.html' itemprop='url'><span itemprop='name'>Daftar Isi</span></a></li>
+                    <li><a href='/p/disclaimer.html' itemprop='url'><span itemprop='name'>Disclaimer</span></a></li>
+                    <li><a href='/p/partner.html' itemprop='url'><span itemprop='name'>Partner</span></a></li>
+                    <li><a href='/p/privacy-policy.html' itemprop='url'><span itemprop='name'>Privacy Policy</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a class='nav-submenu' href='javascript:;' title='Bahasa Program'><span><svg height='24'
+                            viewBox='0 0 24 24' width='24'>
+                            <path
+                                d='M11,6.5V9.33L8.33,12L11,14.67V17.5L5.5,12M13,6.43L18.57,12L13,17.57V14.74L15.74,12L13,9.26M5,3C3.89,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3H5Z' />
+                        </svg>Bahasa Program</span>
+                    <svg class='down' height='24' viewBox='0 0 24 24' width='24'>
+                        <path d='M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z' />
+                    </svg></a>
+                <ul class='nav-sub'>
+                    <li><a href='/search/label/CSS' itemprop='url'><span itemprop='name'>CSS</span></a></li>
+                    <li><a href='/search/label/HTML' itemprop='url'><span itemprop='name'>HTML</span></a></li>
+                    <li><a href='/search/label/Javascript' itemprop='url'><span itemprop='name'>Javascript</span></a>
+                    </li>
+                    <li><a href='/search/label/PHP' itemprop='url'><span itemprop='name'>PHP</span></a></li>
+                </ul>
+            </li>
+            <li>
+                <a class='nav-submenu' href='javascript:;' title='Blogger'><span><svg height='24' viewBox='0 0 24 24'
+                            width='24'>
+                            <path
+                                d='M14,13H9.95A1,1 0 0,0 8.95,14A1,1 0 0,0 9.95,15H14A1,1 0 0,0 15,14A1,1 0 0,0 14,13M9.95,10H12.55A1,1 0 0,0 13.55,9A1,1 0 0,0 12.55,8H9.95A1,1 0 0,0 8.95,9A1,1 0 0,0 9.95,10M16,9V10A1,1 0 0,0 17,11A1,1 0 0,1 18,12V15A3,3 0 0,1 15,18H9A3,3 0 0,1 6,15V8A3,3 0 0,1 9,5H13A3,3 0 0,1 16,8M20,2H4C2.89,2 2,2.89 2,4V20A2,2 0 0,0 4,22H20A2,2 0 0,0 22,20V4C22,2.89 21.1,2 20,2Z' />
+                        </svg>Blogger</span>
+                    <svg class='down' height='24' viewBox='0 0 24 24' width='24'>
+                        <path d='M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z' />
+                    </svg></a>
+                <ul class='nav-sub'>
+                    <li><a href='/search/label/Template' itemprop='url'><span itemprop='name'>Template</span></a></li>
+                    <li><a href='/search/label/Tips' itemprop='url'><span itemprop='name'>Tips</span></a></li>
+                </ul>
+            </li>
+            <li>
+                <a class='nav-submenu' href='javascript:;' title='Framework'><span><svg height='24' viewBox='0 0 24 24'
+                            width='24'>
+                            <path
+                                d='M12 22C10.33 22 8.84 20.5 7.9 17.93C7.83 17.73 7.93 17.5 8.14 17.44C8.34 17.36 8.56 17.47 8.63 17.67C9.44 19.9 10.7 21.23 12 21.23C12.94 21.23 13.87 20.55 14.62 19.31C14.73 19.13 14.96 19.07 15.15 19.18C15.33 19.29 15.39 19.53 15.28 19.71C14.38 21.19 13.22 22 12 22M15.91 17.72C15.87 17.72 15.83 17.71 15.8 17.7C15.59 17.63 15.5 17.42 15.54 17.21C16 15.81 16.22 14.18 16.22 12.5C16.22 8.65 14.97 5.24 13.19 4.14C12.94 4.5 12.5 4.78 12 4.78C11.24 4.78 10.61 4.16 10.61 3.39C10.61 2.62 11.24 2 12 2C12.77 2 13.4 2.61 13.41 3.37C15.53 4.5 17 8.21 17 12.5C17 14.25 16.75 15.96 16.28 17.45C16.23 17.61 16.08 17.72 15.91 17.72M12 2.77C11.66 2.77 11.38 3.05 11.38 3.39C11.38 3.73 11.67 4 12 4C12.35 4 12.64 3.73 12.64 3.39C12.64 3.05 12.35 2.77 12 2.77M4.08 18.54C3.31 18.54 2.68 17.91 2.68 17.15C2.68 16.66 2.94 16.22 3.33 15.97C3.19 13.56 5.68 10.41 9.5 8.22C11.09 7.32 12.75 6.67 14.32 6.34C14.5 6.29 14.73 6.42 14.77 6.63C14.82 6.84 14.69 7.05 14.5 7.09C13 7.41 11.41 8.03 9.9 8.89C6.46 10.86 4.1 13.68 4.1 15.76C4.86 15.77 5.5 16.39 5.5 17.15C5.5 17.92 4.85 18.54 4.08 18.54M4.08 16.53C3.74 16.53 3.46 16.81 3.46 17.15C3.46 17.5 3.74 17.77 4.08 17.77S4.71 17.5 4.71 17.15C4.71 16.81 4.42 16.53 4.08 16.53M18.5 13.44C18.43 13.44 18.34 13.41 18.27 13.35C18.11 13.21 18.09 12.97 18.23 12.8C19.77 11 20.3 9.26 19.64 8.14C19.17 7.33 18.1 6.88 16.63 6.86C16.41 6.86 16.24 6.68 16.25 6.47C16.25 6.26 16.43 6.1 16.64 6.09C18.39 6.11 19.7 6.7 20.31 7.75C21.15 9.19 20.6 11.21 18.82 13.3C18.74 13.39 18.63 13.44 18.5 13.44M16.5 18.9C14.5 18.9 11.94 18.16 9.5 16.77C7.95 15.88 6.57 14.79 5.5 13.63C5.35 13.47 5.36 13.23 5.5 13.08C5.68 12.94 5.92 12.95 6.07 13.11C7.08 14.21 8.4 15.25 9.89 16.1C13.2 18 16.77 18.63 18.65 17.72C18.57 17.55 18.5 17.35 18.5 17.15C18.5 16.38 19.15 15.76 19.92 15.76C20.69 15.76 21.32 16.38 21.32 17.15C21.32 17.92 20.69 18.54 19.92 18.54C19.64 18.54 19.39 18.46 19.17 18.32C18.47 18.71 17.56 18.9 16.5 18.9M19.5 17.63C19.63 17.71 19.77 17.77 19.92 17.77C20.27 17.77 20.55 17.5 20.55 17.15C20.55 16.81 20.27 16.53 19.92 16.53S19.3 16.81 19.3 17.15C19.3 17.29 19.35 17.42 19.43 17.53C19.47 17.55 19.5 17.59 19.5 17.63M4.46 12C4.33 12 4.2 11.92 4.13 11.8C3.23 10.25 3.08 8.81 3.7 7.74C4.54 6.3 6.58 5.76 9.31 6.25C9.5 6.29 9.66 6.5 9.62 6.7C9.59 6.91 9.39 7.05 9.18 7C6.82 6.59 5 7 4.37 8.13C3.89 8.95 4.04 10.11 4.8 11.41C4.9 11.6 4.84 11.83 4.65 11.94C4.59 11.97 4.53 12 4.46 12M12.21 13.4C11.71 13.5 11.21 13.19 11.11 12.69C11 12.2 11.32 11.71 11.81 11.6C12.31 11.5 12.81 11.81 12.91 12.31C13 12.8 12.7 13.29 12.21 13.4Z' />
+                        </svg>Framework</span>
+                    <svg class='down' height='24' viewBox='0 0 24 24' width='24'>
+                        <path d='M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z' />
+                    </svg></a>
+                <ul class='nav-sub'>
+                    <li><a href='/search/label/Material' itemprop='url'><span itemprop='name'>Google Material</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href='/search/label/Firebase' itemprop='url'><span itemprop='name'><svg height='24'
+                            viewBox='0 0 24 24' width='24'>
+                            <path
+                                d='M20,18.69L12.7,22.74C12.2,23 11.7,23 11.2,22.74L4,18.69L17.05,5.54L17.4,5.44C17.7,5.44 17.87,5.57 17.9,5.84L20,18.69M9.35,5.74L4.8,13.29L6.7,1.34C6.73,1.07 6.9,0.94 7.2,0.94C7.4,0.94 7.53,1 7.6,1.19L9.75,5.14L9.35,5.74M13.85,7L4.3,16.59L11.55,4.29C11.65,4.09 11.8,4 12,4C12.2,4 12.33,4.09 12.4,4.29L13.85,7Z' />
+                        </svg>Firebase</span></a></li>
+            <li><a href='/search/label/Game' itemprop='url'><span itemprop='name'><svg height='24' viewBox='0 0 24 24'
+                            width='24'>
+                            <path
+                                d='M9,2V7.5L12,10.5L15,7.5V2H9M2,9V15H7.5L10.5,12L7.5,9H2M16.5,9L13.5,12L16.5,15H22V9H16.5M18,11H20V13H18V11M12,13.5L9,16.5V22H15V16.5L12,13.5Z' />
+                        </svg>Game</span></a></li>
+            <li><a href='/search/label/Internet' itemprop='url'><span itemprop='name'><svg height='24'
+                            viewBox='0 0 24 24' width='24'>
+                            <path
+                                d='M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13C15,12.45 14.55,12 14,12H8V10H10C10.55,10 11,9.55 11,9V7H13C14.1,7 15,6.1 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16C9,17.1 9.9,18 11,18M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2Z' />
+                        </svg>Internet</span></a></li>
+            <li><a href='/search/label/Kalender' itemprop='url'><span itemprop='name'><svg height='24'
+                            viewBox='0 0 24 24' width='24'>
+                            <path
+                                d='M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z' />
+                        </svg>Kalender</span></a></li>
+            <li><a href='/search/label/Youtube' itemprop='url'><span itemprop='name'><svg height='24'
+                            viewBox='0 0 24 24' width='24'>
+                            <path
+                                d='M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z' />
+                        </svg>Youtube</span></a></li>
+        </ul>
+    </nav>
+    <!-- End Navigation -->
+    <div class='post-body' id='animated-thumbnail'>
+        <h1>Cara Membuat Slide Navigation di Blogger</h1>
+        <div class="post-content content_1">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque dapibus, tortor sit amet rhoncus
+                lobortis, leo libero suscipit justo, ac tincidunt ligula eros sit amet sem. Sed lobortis nisl sed diam
+                porttitor, quis lacinia felis lacinia. In urna nulla, consectetur nec nisi vitae, laoreet pellentesque
+                augue. Donec feugiat, velit eu imperdiet semper, ante sem suscipit nulla, congue suscipit ipsum tellus
+                commodo ipsum. Sed pharetra orci a volutpat faucibus.
+                </br> </br>
+            <div class="separator wk" style="clear: both; text-align: center;">
+                <a href="https://unsplash.com/photos/sya5fgN7uVo" imageanchor="1"
+                    style="margin-left: 1em; margin-right: 1em;"><img border="0" class='lazy'
+                        data-src="https://images.unsplash.com/photo-1542838454-d4dce2a7cfde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                        width="640" height="367" data-original-width="1000" data-original-height="574" /></a>
+            </div>
+            <div class="separator wk" style="clear: both; text-align: center;">
+                <a href="https://unsplash.com/photos/rk026C0YUK4" imageanchor="1"
+                    style="margin-left: 1em; margin-right: 1em;"><img border="0" class='lazy'
+                        data-src="https://images.unsplash.com/photo-1549737926-4eedd67c4e9d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
+                        width="640" height="454" data-original-width="1000" data-original-height="709" /></a>
+            </div>
+            <div class="separator wk" style="clear: both; text-align: center;">
+                <a href="https://unsplash.com/photos/LuRFzqHGiA4" imageanchor="1"
+                    style="margin-left: 1em; margin-right: 1em;"><img border="0" class='lazy'
+                        data-src="https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjF9&auto=format&fit=crop&w=334&q=80"
+                        width="640" height="400" data-original-width="1600" data-original-height="1000" /></a>
+            </div>
+            <div class="separator wk" style="clear: both; text-align: center;">
+                <a href="https://unsplash.com/photos/uCM5tNRf37E" imageanchor="1"
+                    style="margin-left: 1em; margin-right: 1em;"><img border="0" class='lazy'
+                        data-src="https://images.unsplash.com/photo-1549417338-6f137ab2cd20?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                        width="640" height="427" data-original-width="1600" data-original-height="1067" /></a>
+            </div>
+            <div class="separator wk" style="clear: both; text-align: center;">
+                <a href="https://unsplash.com/photos/EgzpWU4aPo4" imageanchor="1"
+                    style="margin-left: 1em; margin-right: 1em;"><img class='lazy' border="0"
+                        data-src="https://images.unsplash.com/photo-1549349436-8a35f484c278?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                        width="640" height="427" data-original-width="1280" data-original-height="853" /></a>
+            </div>
+        </div>
+</body>
+
+</html>
